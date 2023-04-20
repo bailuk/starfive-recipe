@@ -26,7 +26,7 @@ First install dependencies to build a riscv64 kernel. See [kernel/Dockerfile](ke
 
 ```bash
 cd kernel
-./buld.sh # Clones or updates kernel source repository and builds kernel
+./buld-kernel.sh # Clones or updates kernel source repository and builds kernel
 ```
 
 ## Step 2: Configure image
