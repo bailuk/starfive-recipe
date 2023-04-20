@@ -69,8 +69,8 @@ Then boot from microSD card. Preferably with USB to TTL module connected.
 # Credits
 
 Based on:
-- (Mobian-team/mobian-recipes)[https://salsa.debian.org/Mobian-team/mobian-recipes]
-- (thomasdstewart/starfive-visionfive2)[https://github.com/thomasdstewart/starfive-visionfive2]
+- [Mobian-team/mobian-recipes](https://salsa.debian.org/Mobian-team/mobian-recipes)
+- [thomasdstewart/starfive-visionfive2](https://github.com/thomasdstewart/starfive-visionfive2)
 
 # Useful resources
 
