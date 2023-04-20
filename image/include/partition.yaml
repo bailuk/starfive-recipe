@@ -1,0 +1,41 @@
+{{- $architecture := or .architecture "riscv64" -}}
+{{- $filesystem := or .filesystem "ext4" }}
+{{- $image := or .image "starfive" -}}
+{{- $imagesize := or .imagesize "3.8GB" }}
+
+architecture: {{ $architecture }}
+
+actions:
+  - action: image-partition
+    imagename: {{ $image }}.img
+    imagesize: {{ $imagesize }}
+    partitiontype: gpt
+    mountpoints:
+      - mountpoint: /
+        partition: rootfs
+        options: [ "x-systemd.growfs" ]
+      - mountpoint: /boot
+        partition: boot
+        options: [ "x-systemd.growfs" ]
+    partitions:
+      - name: spl
+        fs: none
+        start: 2MiB
+        end: 4MiB
+        parttype: "2E54B353-1271-4842-806F-E436D6AF6985"
+      - name: uboot
+        fs: none
+        start: 4MiB
+        end: 8MiB
+        parttype: "5B193300-FC78-40CD-8002-E86C45580B47"
+      - name: boot
+        fs: fat32
+        start: 8MiB
+        end: 256MiB
+        flags: [ esp, boot ]
+      - name: rootfs
+        fs: {{ $filesystem }}
+        start: 256MiB
+        end: 100%
+        parttype: "0FC63DAF-8483-4772-8E79-3D69D8477DE4"
+

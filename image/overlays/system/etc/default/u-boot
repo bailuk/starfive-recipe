@@ -1,0 +1,4 @@
+U_BOOT_PARAMETERS="rw quiet console=ttyS0,115200 earlycon rootwait"
+U_BOOT_ROOT="root=/dev/mmcblk1p4"
+U_BOOT_FDT="dtbs/jh7110-visionfive-v2.dtb"
+

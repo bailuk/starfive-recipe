@@ -1,0 +1,105 @@
+{{- $username := or .username "admin" -}}
+{{- $password := or .password "1234" -}}
+
+{{- $contrib := or .contrib "false" -}}
+{{- $nonfree := or .nonfree "false" -}}
+
+{{- $filesystem := or .filesystem "ext4" }}
+{{- $imagesize := or .imagesize "2GB" }}
+{{- $image := or .image "starfive" -}}
+{{- $bootstart := or .bootstart "1MiB" }}
+
+{{- $ssh := or .ssh "" -}}
+{{- $hostname := or .hostname "starfive" -}}
+{{- $suite := or .suite "sid" -}}
+
+architecture: riscv64
+
+actions:
+  - action: debootstrap
+    suite: {{ $suite }}
+    components:
+      - main
+{{ if eq $contrib "true" }}
+      - contrib
+{{ end }}
+{{ if eq $nonfree "true" }}
+      - non-free-firmware
+{{ end }}
+    mirror: http://deb.debian.org/debian-ports
+    keyring-file: debian-ports-archive-keyring.gpg
+    arch: riscv64
+    variant: minbase
+
+  - action: apt
+    description: Base packages
+    recommends: false
+    packages: 
+        - debian-ports-archive-keyring
+        - systemd-timesyncd
+        - initramfs-tools
+        - systemd-sysv
+        - u-boot-menu
+        - net-tools
+        - mtd-utils
+        - ifupdown        
+        - adduser
+        - sudo
+        - htop
+        - ssh
+
+{{ if $ssh }}
+        - openssh-server
+{{ end }}
+
+  - action: recipe
+    recipe: include/partition.yaml
+    variables:
+      filesystem: {{ $filesystem }}
+      image: {{ $image }}
+      imagesize: {{ $imagesize }}
+      bootstart: {{ $bootstart }}
+
+  - action: filesystem-deploy
+    description: Deploy filesystem onto image
+
+  - action: run
+    description: Create default user
+    chroot: true
+    script: scripts/create-user.sh {{ $username }} {{ $password }}
+
+  - action: overlay
+    description: Set up default user's home directory
+    source: overlays/user-home/
+    destination: /home/{{ $username }}/
+
+  - action: run
+    description: Set up default user
+    chroot: true
+    script: scripts/setup-user.sh {{ $username }}
+
+  - action: overlay
+    description: System overlay
+    source: overlays/system/
+    destination: /
+
+  - action: run
+    description: Set up system
+    chroot: true
+    script: scripts/setup-system.sh {{ $hostname }}
+
+  - action: run
+    description: Install kernel
+    chroot: true
+    script: scripts/install-kernel.sh
+
+  - action: overlay
+    description: System custom overlay
+    source: overlays/system-custom/
+    destination: /
+    
+  - action: run
+    description: Cleanup filesystem
+    chroot: true
+    script: scripts/rootfs-cleanup.sh
+

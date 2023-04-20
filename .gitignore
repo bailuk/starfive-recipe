@@ -1,0 +1,8 @@
+linux-*
+kernel/linux/
+todo/
+*.img
+image/overlays/user-home/*
+image/overlays/system-custom/*
+image/overlays/system/opt/kernel/*
+
