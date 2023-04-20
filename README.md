@@ -1,6 +1,6 @@
 # starfive-recipe
 
-Scripts and recipe to build a Debian image for a [starfive](https://www.starfivetech.com/en) based devices.
+Scripts and recipe to build a Debian image for [starfive](https://www.starfivetech.com/en) based devices.
 
 - Build kernel from source (directly or inside container)
 - Build image using a [debos](https://github.com/go-debos/debos) recipe

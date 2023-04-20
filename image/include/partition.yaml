@@ -1,7 +1,7 @@
 {{- $architecture := or .architecture "riscv64" -}}
 {{- $filesystem := or .filesystem "ext4" }}
 {{- $image := or .image "starfive" -}}
-{{- $imagesize := or .imagesize "3.8GB" }}
+{{- $imagesize := or .imagesize "2GB" }}
 
 architecture: {{ $architecture }}
 
@@ -20,7 +20,7 @@ actions:
     partitions:
       - name: spl
         fs: none
-        start: 2MiB
+        start: 0%
         end: 4MiB
         parttype: "2E54B353-1271-4842-806F-E436D6AF6985"
       - name: uboot

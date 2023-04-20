@@ -1,5 +1,11 @@
+{{- $hostname := or .hostname "starfive" -}}
 {{- $username := or .username "admin" -}}
 {{- $password := or .password "1234" -}}
+
+{{- $suite := or .suite "sid" -}}
+
+{{- $ssh := or .ssh "" -}}
+{{- $xfce := or .xfce "" -}}
 
 {{- $contrib := or .contrib "false" -}}
 {{- $nonfree := or .nonfree "false" -}}
@@ -8,10 +14,6 @@
 {{- $imagesize := or .imagesize "2GB" }}
 {{- $image := or .image "starfive" -}}
 {{- $bootstart := or .bootstart "1MiB" }}
-
-{{- $ssh := or .ssh "" -}}
-{{- $hostname := or .hostname "starfive" -}}
-{{- $suite := or .suite "sid" -}}
 
 architecture: riscv64
 
@@ -37,19 +39,28 @@ actions:
     packages: 
         - debian-ports-archive-keyring
         - systemd-timesyncd
+        - isc-dhcp-client
         - initramfs-tools
         - systemd-sysv
         - u-boot-menu
         - net-tools
         - mtd-utils
-        - ifupdown        
+        - ifupdown
         - adduser
+        - fdisk
+        - less
         - sudo
         - htop
+        - vim
         - ssh
 
-{{ if $ssh }}
+{{ if eq $ssh "true" }}
         - openssh-server
+{{ end }}
+
+{{ if eq $xfce "true" }}
+        - lightdm
+        - xfce4
 {{ end }}
 
   - action: recipe
