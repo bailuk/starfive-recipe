@@ -31,7 +31,7 @@ cd kernel
 
 ## Step 2: Configure image
 
-Edit [image/build.sh](image/build.sh) to pass arguments to debos recipe (image/starfive.yaml)[image/starfive.yaml].
+Edit [image/build.sh](image/build.sh) to pass arguments to debos recipe [image/starfive.yaml](image/starfive.yaml).
 
 Add custom files:
 - Add files to `image/overlays/user-home` (file system overlay for `/home/default-user/`)
