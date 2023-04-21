@@ -78,4 +78,5 @@ Based on:
 - [Pratham Patel's Blog -  Review of the VisionFive 2](https://blog.thefossguy.com/posts/visionfive-2-initial-review/)
 - [StarFive VisionFive 2 Debian SSD Boot Guide](https://jamesachambers.com/starfive-visionfive-2-debian-ssd-boot-guide/)
 - [VisionFive 2 Quick Start Guide](https://doc-en.rvspace.org/VisionFive2/PDF/VisionFive2_QSG.pdf)
+- [starfive-tech on github](https://github.com/starfive-tech)
 

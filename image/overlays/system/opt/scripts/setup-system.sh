@@ -7,4 +7,3 @@ echo "$1" > /etc/hostname
 systemctl disable systemd-firstboot.service
 systemctl mask systemd-firstboot.service
 
-

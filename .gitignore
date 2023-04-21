@@ -5,4 +5,5 @@ todo/
 image/overlays/user-home/*
 image/overlays/system-custom/*
 image/overlays/system/opt/kernel/*
+image/overlays/system/opt/gpu/*
 build-custom.sh
