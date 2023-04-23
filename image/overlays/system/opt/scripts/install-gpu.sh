@@ -19,3 +19,9 @@ fi
 
 tar --strip-components=2 --keep-directory-symlink --no-same-owner -xzvf ${img_archive} -C /
 
+
+# Add hook to include firmware into initramfs.img
+mkdir -p /etc/initramfs-tools/hooks
+cp gpu-firmware /etc/initramfs-tools/hooks
+chmod 700 /etc/initramfs-tools/hooks/gpu-firmware
+

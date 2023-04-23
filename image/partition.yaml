@@ -16,7 +16,6 @@ actions:
         options: [ "x-systemd.growfs" ]
       - mountpoint: /boot
         partition: boot
-        options: [ "x-systemd.growfs" ]
     partitions:
       - name: spl
         fs: none

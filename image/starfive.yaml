@@ -1,4 +1,7 @@
 {{- $hostname := or .hostname "starfive" -}}
+{{- $timezone := or .timezone "" -}}
+{{- $locale := or .locale "" -}}
+
 {{- $username := or .username "admin" -}}
 {{- $password := or .password "1234" -}}
 
@@ -48,6 +51,7 @@ actions:
         - mtd-utils
         - ifupdown
         - adduser
+        - locales
         - fdisk
         - less
         - sudo
@@ -99,12 +103,7 @@ actions:
   - action: run
     description: Set up system
     chroot: true
-    script: overlays/system/opt/scripts/setup-system.sh {{ $hostname }}
-
-  - action: run
-    description: Install kernel
-    chroot: true
-    script: overlays/system/opt/scripts/install-kernel.sh
+    script: overlays/system/opt/scripts/setup-system.sh {{ $hostname }} {{ $timezone }} {{ $locale }}
 
 {{ if eq $xfce "true" }}
   - action: run
@@ -112,6 +111,11 @@ actions:
     chroot: true
     script: overlays/system/opt/scripts/install-gpu.sh
 {{ end }}
+
+  - action: run
+    description: Install kernel
+    chroot: true
+    script: overlays/system/opt/scripts/install-kernel.sh
 
   - action: overlay
     description: System custom overlay

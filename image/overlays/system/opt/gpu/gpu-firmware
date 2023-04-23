@@ -1,0 +1,26 @@
+#!/bin/sh
+
+#
+# Add firmware for Imagination GPU
+# to initramfs image
+#
+
+PREREQ=""
+              
+prereqs()
+{
+    echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+    prereqs
+    exit 0
+    ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+add_firmware "rgx.fw.36.50.54.182"
+add_firmware "rgx.sh.36.50.54.182"
+
