@@ -8,17 +8,27 @@
 
 mkdir -p /opt/gpu
 cd /opt/gpu || exit 1
-img_archive="img-gpu-powervr-bin-1.17.6210866.tar.gz"
+img_archive="IMG_GPU-xorg.tar.gz"
 
-# Can be downloaded before hand and put into `overlays/system/opt/gpu`
+# Can be downloaded in advance and put into `overlays/system/opt/gpu`
 if [ ! -f "${img_archive}" ]; then
     # wget looks for `https_proxy` environment variable
     echo "https_proxy=${https_proxy}"
-    wget "https://github.com/starfive-tech/soft_3rdpart/raw/JH7110_VisionFive2_devel/IMG_GPU/out/${img_archive}" || exit 1
+    wget "https://github.com/starfive-tech/Debian/raw/20221225T084846Z/gpu/DDK1.17-binary-xorg/${img_archive}" || exit 1
 fi
 
-tar --strip-components=2 --keep-directory-symlink --no-same-owner -xzvf ${img_archive} -C /
+tar -C / --strip-components=1 --keep-directory-symlink --no-same-owner -xzvf ${img_archive}
 
+# Replace Xorg binary
+rm -f /usr/bin/Xorg
+rm -f /usr/bin/X
+ln -s /usr/local/bin/Xorg /usr/bin/Xorg
+ln -s /usr/local/bin/Xorg /usr/bin/X
+
+# libfreetype is incompatible with /usr/lib/riscv64-linux-gnu/libharfbuzz.so
+rm -f /usr/local/lib/libfreetype.so*
+
+ldconfig
 
 # Add hook to include firmware into initramfs.img
 mkdir -p /etc/initramfs-tools/hooks

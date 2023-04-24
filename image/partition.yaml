@@ -1,7 +1,7 @@
 {{- $architecture := or .architecture "riscv64" -}}
 {{- $filesystem := or .filesystem "ext4" }}
 {{- $image := or .image "starfive" -}}
-{{- $imagesize := or .imagesize "2GB" }}
+{{- $imagesize := or .imagesize "3GB" }}
 
 architecture: {{ $architecture }}
 
